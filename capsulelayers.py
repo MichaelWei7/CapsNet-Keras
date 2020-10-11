@@ -95,9 +95,7 @@ class CapsuleLayer(layers.Layer):
     :param dim_capsule: dimension of the output vectors of the capsules in this layer
     :param routings: number of iterations for the routing algorithm
     """
-    def __init__(self, num_capsule, dim_capsule, routings=3,
-                 kernel_initializer='glorot_uniform',
-                 **kwargs):
+    def __init__(self, num_capsule, dim_capsule, routings=3, kernel_initializer='glorot_uniform', **kwargs):
         super(CapsuleLayer, self).__init__(**kwargs)
         self.num_capsule = num_capsule
         self.dim_capsule = dim_capsule
@@ -110,10 +108,12 @@ class CapsuleLayer(layers.Layer):
         self.input_dim_capsule = input_shape[2]
 
         # Transform matrix
-        self.W = self.add_weight(shape=[self.num_capsule, self.input_num_capsule,
-                                        self.dim_capsule, self.input_dim_capsule],
-                                 initializer=self.kernel_initializer,
-                                 name='W')
+        self.W = self.add_weight(shape=[self.num_capsule, 
+                                        self.input_num_capsule,
+                                        self.dim_capsule, 
+                                        self.input_dim_capsule],
+                                        initializer = self.kernel_initializer,
+                                        name = 'W')
 
         self.built = True
 
