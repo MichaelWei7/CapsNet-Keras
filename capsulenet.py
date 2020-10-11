@@ -46,8 +46,7 @@ def CapsNet(input_shape, n_class, routings):
     primarycaps = PrimaryCap(conv1, dim_capsule=8, n_channels=32, kernel_size=9, strides=2, padding='valid')
 
     # Layer 3: Capsule layer. Routing algorithm works here.
-    digitcaps = CapsuleLayer(num_capsule=n_class, dim_capsule=16, routings=routings,
-                             name='digitcaps')(primarycaps)
+    digitcaps = CapsuleLayer(num_capsule=n_class, dim_capsule=16, routings=routings, name='digitcaps')(primarycaps)
 
     # Layer 4: This is an auxiliary layer to replace each capsule with its length. Just to match the true label's shape.
     # If using tensorflow, this will not be necessary. :)
@@ -210,25 +209,16 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Capsule Network on MNIST.")
     parser.add_argument('--epochs', default=50, type=int)
     parser.add_argument('--batch_size', default=100, type=int)
-    parser.add_argument('--lr', default=0.001, type=float,
-                        help="Initial learning rate")
-    parser.add_argument('--lr_decay', default=0.9, type=float,
-                        help="The value multiplied by lr at each epoch. Set a larger value for larger epochs")
-    parser.add_argument('--lam_recon', default=0.392, type=float,
-                        help="The coefficient for the loss of decoder")
-    parser.add_argument('-r', '--routings', default=3, type=int,
-                        help="Number of iterations used in routing algorithm. should > 0")
-    parser.add_argument('--shift_fraction', default=0.1, type=float,
-                        help="Fraction of pixels to shift at most in each direction.")
-    parser.add_argument('--debug', action='store_true',
-                        help="Save weights by TensorBoard")
+    parser.add_argument('--lr', default=0.001, type=float,          help="Initial learning rate")
+    parser.add_argument('--lr_decay', default=0.9, type=float,          help="The value multiplied by lr at each epoch. Set a larger value for larger epochs")
+    parser.add_argument('--lam_recon', default=0.392, type=float,           help="The coefficient for the loss of decoder")
+    parser.add_argument('-r', '--routings', default=3, type=int,            help="Number of iterations used in routing algorithm. should > 0")
+    parser.add_argument('--shift_fraction', default=0.1, type=float,            help="Fraction of pixels to shift at most in each direction.")
+    parser.add_argument('--debug', action='store_true',             help="Save weights by TensorBoard")
     parser.add_argument('--save_dir', default='./result')
-    parser.add_argument('-t', '--testing', action='store_true',
-                        help="Test the trained model on testing dataset")
-    parser.add_argument('--digit', default=5, type=int,
-                        help="Digit to manipulate")
-    parser.add_argument('-w', '--weights', default=None,
-                        help="The path of the saved weights. Should be specified when testing")
+    parser.add_argument('-t', '--testing', action='store_true',             help="Test the trained model on testing dataset")
+    parser.add_argument('--digit', default=5, type=int,             help="Digit to manipulate")
+    parser.add_argument('-w', '--weights', default=None,            help="The path of the saved weights. Should be specified when testing")
     args = parser.parse_args()
     print(args)
 
